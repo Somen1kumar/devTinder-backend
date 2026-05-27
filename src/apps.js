@@ -24,6 +24,7 @@ app.use("/profile", userProfile);
 app.use("/request", userConnection);
 app.use("/user", userDetails);
 
+
 connectToDB()
   .then(() => {
     console.log("Database connected");
