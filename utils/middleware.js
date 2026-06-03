@@ -23,7 +23,6 @@
 const jwt = require("jsonwebtoken");
 const { User } = require("../models/user");
 const validator = require("validator")
-const PRIVATE_KEY = "CARNIVALPOCUK12345ADOBE";
 
 
 const JWTAuthentication = async (req, res, next) => {
@@ -34,7 +33,7 @@ const JWTAuthentication = async (req, res, next) => {
         if (!token) {
             throw new Error("Invalid Token");
         }
-        const jwtId = await jwt.verify(token, PRIVATE_KEY);
+        const jwtId = await jwt.verify(token, process.env.PRIVATE_KEY);
         const currentUser = await User.findById(jwtId.id);
         if (!currentUser) {
             throw new Error("Invalid User");

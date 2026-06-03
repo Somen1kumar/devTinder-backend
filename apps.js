@@ -1,14 +1,14 @@
 const express = require("express");
 const cookieParser = require('cookie-parser')
-
-const { connectToDB } = require("../configs/database");
-const { User } = require("../models/user");
-const authUser = require("../router/auth");
-const userProfile = require("../router/profile");
-const userConnection = require("../router/connection");
-const userDetails = require("../router/user");
+const { connectToDB } = require("./configs/database");
+const { User } = require("./models/user");
+const authUser = require("./router/auth");
+const userProfile = require("./router/profile");
+const userConnection = require("./router/connection");
+const userDetails = require("./router/user");
 const cors = require('cors')
 const app = express();
+require('dotenv').config();
 
 app.use(express.json());
 app.use(cors({
@@ -23,7 +23,6 @@ app.use("/auth",authUser);
 app.use("/profile", userProfile);
 app.use("/request", userConnection);
 app.use("/user", userDetails);
-
 
 connectToDB()
   .then(() => {

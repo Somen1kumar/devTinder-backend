@@ -67,7 +67,6 @@ schemaUser.path("email").validate(function (value) {
 });
 schemaUser.methods.createJWTToken = async function () {
   const currentUser = this;
-  console.log("currentUser", currentUser.id);
   const JWT_TOKEN = await jwt.sign({id: currentUser.id}, PRIVATE_KEY, {expiresIn: "1d"});
 
   return JWT_TOKEN;
