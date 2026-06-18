@@ -36,3 +36,18 @@ config file end ---------------end-----------------------------------
 
 after adding it save the file by exiting 
 - sudo systemctl restart nginx
+
+-----------------After adding .env file to the locale and push to github
+- stop pm2 :- pm2 stop myapp
+- take the git pull
+- npm install
+- sudo nano .env 
+    copy the credentials and save it
+    - ls -la .env if it say root root
+- change the root root to ubuntu userId since its created in root so we dont have permission
+    - whoami
+    - sudo chown ubuntu:ubuntu .env
+    - ls -la .env (chaged to root root) then
+
+- pm2 delete all
+- pm2 start apps.js --name "dev-tinder"

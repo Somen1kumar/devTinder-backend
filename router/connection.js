@@ -121,7 +121,7 @@ routeApp.post("/review/:status/:connectionId", JWTAuthentication, async (req,res
         };
 
         res.status(200).json({
-            message: "Connection is accepted",
+            message: "Connection is "+ status,
             data: currentLoggedInUser
         });
         

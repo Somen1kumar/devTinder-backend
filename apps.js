@@ -1,4 +1,5 @@
 const express = require("express");
+const http = require("http");
 const cookieParser = require('cookie-parser')
 const { connectToDB } = require("./configs/database");
 const { User } = require("./models/user");
@@ -6,7 +7,9 @@ const authUser = require("./router/auth");
 const userProfile = require("./router/profile");
 const userConnection = require("./router/connection");
 const userDetails = require("./router/user");
-const cors = require('cors')
+const SocketIO = require("./utils/socket")
+const cors = require('cors');
+const chatRoute = require("./router/chat");
 const app = express();
 require('dotenv').config();
 
@@ -16,18 +19,20 @@ app.use(cors({
   credentials: true,
   optionsSuccessStatus: 200
 }));
-
+const server = http.createServer(app);
+SocketIO(server);
 // for parsing the cookie we need cookie parser so that we can read from req of api
 app.use(cookieParser());
 app.use("/auth",authUser);
 app.use("/profile", userProfile);
 app.use("/request", userConnection);
 app.use("/user", userDetails);
+app.use("/chat", chatRoute);
 
 connectToDB()
   .then(() => {
     console.log("Database connected");
-    app.listen(3000, () => {
+    server.listen(3000, () => {
       console.log("Connected to the Port 3000");
     });
   })

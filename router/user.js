@@ -51,7 +51,7 @@ userRouter.get("/user_connections", JWTAuthentication, async (req,res) => {
                     ]
                 }
             ]
-        }).populate("fromUserId", ["firstName", "lastName", "email"]).populate("toUserId", ["firstName","lastName","email"]);
+        }).populate("fromUserId", ["firstName", "lastName", "email" , "age", "gender", "description", "photoUrl"]).populate("toUserId", ["firstName","lastName","email", "age", "gender", "description", "photoUrl"]);
 
         const yourConnection = allConnections.map((item) => {
             if(item.fromUserId._id.toString() === currentUser._id.toString()) {
@@ -59,10 +59,16 @@ userRouter.get("/user_connections", JWTAuthentication, async (req,res) => {
             }
             return item.fromUserId;
         });
+        if(yourConnection.length > 0 ) {
+            res.status(200).json({
+                data: yourConnection
+            })
+        } else {
+            res.status(200).json({
+                errorMessage: "You dont have mutual Connections"
+            });
+        }
 
-        res.status(200).json({
-            data: yourConnection
-        })
         
     } catch (error) {
 
