@@ -9,6 +9,7 @@ to update code
     - pm2 list
     - pm2 stop <nameofLog>
     - pm2 delete <nameofLog>
+    - pm2 restart 0
 
 - to change to configs so that FE and API URL is same and port is replaced with /api/
     append nginx file by writing command

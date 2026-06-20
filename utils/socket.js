@@ -19,10 +19,11 @@ const Socket = (server) => {
 
 
   });
-  client.on('sendMessage', async ({newMessage}) => { 
+  client.on('sendMessage', async ({newMessage, messages}) => { 
     const {targetObj, userInfo, text , id, fromUserId} = newMessage;
     const splitRoomId = targetObj.split("_");
     const roomId = targetObj.split("_").sort().join("_");
+    console.log(newMessage);
     let findConnection = await connectionModel.findOne({
         $and: [
             {status: "accepted"},
@@ -50,7 +51,7 @@ const Socket = (server) => {
         console.log("chatModel.chatMessage", findRoom);
         await findRoom.save();
         console.log(newMessage);
-        io.to(roomId).emit("updatedMessage", {userInfo, text, id, fromUserId} );
+        io.to(roomId).emit("updatedMessage", {userInfo, text, id, fromUserId, messages} );
 
     }
 
